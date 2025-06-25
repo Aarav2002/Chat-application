@@ -16,7 +16,7 @@ function ChatHeader({ currentUser, onLogout, isConnected, userCount, onToggleUse
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-3">
           <MessageCircle className="w-8 h-8 text-white drop-shadow" />
-          <h1 className="text-2xl font-extrabold text-white tracking-tight drop-shadow">BuzzLine</h1>
+          <h1 className="text-2xl font-extrabold text-white tracking-tight drop-shadow">BuzzzLine</h1>
         </div>
         <div className="hidden lg:flex items-center gap-3 ml-8 bg-white/20 px-4 py-1.5 rounded-full">
           {isConnected ? (

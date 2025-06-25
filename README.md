@@ -1,4 +1,4 @@
-# 🚀 LIA AI Chat Application
+# 🚀 BUZZZLINE
 
 A modern, real-time chat application built for collaborative teams. This project demonstrates scalable frontend-backend architecture, real-time communication, and a polished user experience.
 
