@@ -1,4 +1,4 @@
-# 🏗️ LIA AI Chat Application: Architecture & Flow
+# 🏗️ Documentation Of Chat Application: Architecture & Flow
 
 ## 🧭 Overview
 This application is architected for clarity, modularity, and scalability. It separates concerns between a modern React frontend and a robust Node.js/Express backend, communicating via Socket.IO for real-time features.
