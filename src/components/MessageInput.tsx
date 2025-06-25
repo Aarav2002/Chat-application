@@ -1,5 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send } from 'lucide-react';
+import Picker from '@emoji-mart/react';
+import data from '@emoji-mart/data';
+import Keyboard from 'react-simple-keyboard';
+import 'react-simple-keyboard/build/css/index.css';
+import { Smile, Keyboard as KeyboardIcon } from 'lucide-react';
 
 interface MessageInputProps {
   onSendMessage: (text: string) => void;
@@ -11,6 +16,8 @@ interface MessageInputProps {
 function MessageInput({ onSendMessage, onTypingStart, onTypingStop, disabled }: MessageInputProps) {
   const [message, setMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [showKeyboard, setShowKeyboard] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const typingTimeoutRef = useRef<number | null>(null);
 
@@ -67,9 +74,38 @@ function MessageInput({ onSendMessage, onTypingStart, onTypingStop, disabled }: 
     }
   };
 
+  const handleEmojiSelect = (emoji: any) => {
+    setMessage((prev) => prev + emoji.native);
+    setShowEmojiPicker(false);
+    inputRef.current?.focus();
+  };
+
+  const handleKeyboardInput = (input: string) => {
+    setMessage((prev) => prev + input);
+    inputRef.current?.focus();
+  };
+
   return (
     <div className="bg-gradient-to-t from-white/80 to-blue-50/60 border-t border-blue-100 p-4 shadow-inner rounded-b-3xl">
-      <form onSubmit={handleSubmit} className="flex gap-3 items-center">
+      <form onSubmit={handleSubmit} className="flex gap-3 items-center relative">
+        <div className="flex gap-2 items-center">
+          <button
+            type="button"
+            onClick={() => setShowEmojiPicker((v) => !v)}
+            className="p-2 bg-white/80 rounded-full hover:bg-blue-100 transition-colors"
+            tabIndex={-1}
+          >
+            <Smile className="w-5 h-5 text-blue-400" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowKeyboard((v) => !v)}
+            className="p-2 bg-white/80 rounded-full hover:bg-blue-100 transition-colors"
+            tabIndex={-1}
+          >
+            <KeyboardIcon className="w-5 h-5 text-blue-400" />
+          </button>
+        </div>
         <input
           ref={inputRef}
           type="text"
@@ -88,6 +124,28 @@ function MessageInput({ onSendMessage, onTypingStart, onTypingStop, disabled }: 
         >
           <Send className="w-5 h-5" />
         </button>
+        {showEmojiPicker && (
+          <div className="absolute bottom-16 left-0 z-50">
+            <Picker data={data} onEmojiSelect={handleEmojiSelect} theme="light" />
+          </div>
+        )}
+        {showKeyboard && (
+          <div className="absolute bottom-16 left-0 z-50">
+            <Keyboard
+              onKeyPress={handleKeyboardInput}
+              theme="hg-theme-default hg-layout-default myTheme"
+              layout={{ default: [
+                '1 2 3 4 5 6 7 8 9 0',
+                'q w e r t y u i o p',
+                'a s d f g h j k l',
+                'z x c v b n m',
+                '{space}'
+              ]}}
+              display={{ '{space}': 'Space' }}
+              buttonTheme={[]}
+            />
+          </div>
+        )}
       </form>
     </div>
   );
